@@ -154,7 +154,23 @@ export default () => (
 
 Now, clicking the espresso product link will result in the URL path being `/product/espresso` while rendering the `product` page with the name query parameter set to `espresso`.
 
-### Step 3: Defining `routes` configuration
+### Step 3: Configuring `next-config.js`
+
+To enable **serverless mode** in Next.js, add the `serverless` build `target` in `next.config.js`:
+
+```js
+// next.config.js
+module.exports = {
+  target: 'serverless'
+}
+```
+
+The `serverless` target will output a single lambda per page. This file is completely standalone and doesn't require any dependencies to run:
+
+- `pages/index.js` => `.next/serverless/pages/index.js`
+- `pages/about.js` => `.next/serverless/pages/about.js`
+
+### Step 4: Defining `routes` configuration
 
 <Note>
   The prerequisite for this configuration is to host your Next.js application on
@@ -195,7 +211,7 @@ For this context, we can use [the `routes` configuration option](/docs/v2/deploy
 
 The routes property, as exampled above, allows us to define a [named capture group](https://www.pcre.org/original/doc/html/pcrepattern.html#SEC16) that gets the query parameter from the URL path and enables the usage of that parameter in the destination path by using the capture ID prefixed by a dollar sign, in our case; `$name`.
 
-### Step 4: Deploying
+### Step 5: Deploying
 
 With the Next.js application setup complete and Now configured to accept the custom routes, we can finally deploy our application [using Now](/docs) and [the Next.js Builder](/docs/v2/deployments/official-builders/next-js-now-next/).
 
